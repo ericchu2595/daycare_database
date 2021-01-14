@@ -1,7 +1,7 @@
 # Daycare Database
 Fall 2020 Database Project
 
-I.Business Scenario
+I. Business Scenario
  
 A narrative description of the business used for the project or application being created. This should also include a description of the problem or opportunity being addressed.
 
