@@ -1,4 +1,4 @@
-# daycare_database
+# Daycare Database
 Fall 2020 Database Project
 
 I.Business Scenario
