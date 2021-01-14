@@ -1,7 +1,6 @@
 # Daycare Database Fall 2020
 
-Group Project Created By:
-
+Group project created and designed by:
 Samuel Salzman, Eric Chu , Justin Joseph, Sarah Natanov, Katie Xu 
 
 
