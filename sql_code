@@ -1,0 +1,350 @@
+CREATE TABLE Child
+( 
+Child_ID 			VARCHAR (25) NOT NULL, 
+First_Name		VARCHAR (15) NOT NULL, 
+Last_Name			VARCHAR (15) NOT NULL, 
+DOB				DATE, 
+Gender			VARCHAR (6) NOT NULL, 
+SSN				VARCHAR (11) NOT NULL, 
+Age				NUMBER, 
+Emergency_Contact	VARCHAR (25), 	
+Food_Allergies		VARCHAR (50), 
+Meal_Preference	VARCHAR (50), 
+Napping_Hours		VARCHAR (20), 
+Start_Date		DATE, 
+End_Date			DATE, 
+Guardian_ID		VARCHAR(25) NOT NULL, 
+Program_ID		VARCHAR(25) NOT NULL,
+CONSTRAINT 	pk_Child
+PRIMARY KEY (Child_ID)
+);
+
+CREATE TABLE Guardian 
+(
+Guardian_ID		VARCHAR(25) NOT NULL,
+First_Name		VARCHAR(35) NOT NULL,
+Last_Name			VARCHAR(35) NOT NULL,
+Street_Address		VARCHAR(35),
+City				VARCHAR(35),
+State			VARCHAR(2),
+Zip_Code			VARCHAR(12),
+Gender			VARCHAR(6) NOT NULL,
+SSN				VARCHAR(11) NOT NULL, 
+Cell_Number		VARCHAR(11),
+Home_Number		VARCHAR(35),
+Enroll_Date		DATE,
+CONSTRAINT 	pk_Guardian 
+PRIMARY KEY (Guardian_ID)
+);
+
+
+CREATE TABLE Supplies (
+Product_ID		VARCHAR(25) NOT NULL,
+Product_Name	   	VARCHAR(20) NOT NULL,
+Date_Purchased		DATE,
+Supplier_Name		VARCHAR(20) NOT NULL,
+Quantity			NUMBER,
+Cost				NUMBER,
+CONSTRAINT 	pk_Supplies 
+PRIMARY KEY(Product_ID)
+ );
+
+CREATE TABLE Programs
+(
+Program_ID 		VARCHAR(25) NOT NULL,
+Program_Name		VARCHAR(20) NOT NULL,
+Program_Description VARCHAR(200) NOT NULL,
+Age_Group 		VARCHAR(20) NOT NULL,
+Program_Size  	 	NUMBER,
+Days_Per_Week 		NUMBER,
+Hours_Per_Day 	 	NUMBER,
+Total_Days 		NUMBER,
+Meal_Plan 		VARCHAR(20),
+Start_Date 		DATE,
+End_Date		 	DATE,
+CONSTRAINT	pk_Programs
+	PRIMARY KEY (Program_ID)
+);
+
+CREATE TABLE Vendors 
+(
+Vendor_ID			VARCHAR(20) NOT NULL,
+Vendor_Name		VARCHAR(25) NOT NULL,
+Vendor_Description  VARCHAR(250) NOT NULL,
+Phone_Number		VARCHAR(11) NOT NULL,
+Street_Address		VARCHAR(50) NOT NULL,
+City      		VARCHAR(20) NOT NULL,
+State    			VARCHAR(2) NOT NULL,
+Zip_Code			VARCHAR(12) NOT NULL,
+CONSTRAINT 	pk_Vendors 
+PRIMARY KEY(Vendor_ID)
+ );
+
+
+CREATE TABLE Employee
+(
+Employee_ID		VARCHAR(25) NOT NULL,
+First_Name		VARCHAR(25) NOT NULL, 
+Last_Name			VARCHAR(25) NOT NULL, 
+Street_Address		VARCHAR (50), 
+City				VARCHAR(20), 
+State			VARCHAR(2), 
+Zip_Code			VARCHAR(10),  
+Gender			VARCHAR(10),
+Pay_Rate			NUMBER, 
+SSN				VARCHAR(11) NOT NULL,
+Start_Date		DATE,
+Job				VARCHAR(50) NOT NULL,
+CONSTRAINT 	pk_Employee
+PRIMARY KEY(Employee_ID)
+);
+
+CREATE TABLE Program_Supplies
+(
+Program_ID		VARCHAR(35) NOT NULL,
+Product_ID		VARCHAR(35) NOT NULL,
+CONSTRAINT 	pk_Program_Supplies
+PRIMARY KEY(Program_ID, Product_ID)
+);
+
+
+
+
+
+
+CREATE TABLE Supplies_Vendors
+(
+Product_ID		VARCHAR(35) NOT NULL,
+Vendor_ID			VARCHAR(35) NOT NULL,
+CONSTRAINT 	pk_Supplies_Vendors
+PRIMARY KEY(Product_ID, Vendor_ID)
+);
+
+CREATE TABLE Employee_Vendors 
+(
+Employee_ID		VARCHAR(35) NOT NULL,	
+Vendor_ID			VARCHAR(35) NOT NULL,
+CONSTRAINT 	pk_Employee_Vendors
+PRIMARY KEY(Employee_ID, Vendor_ID)
+);
+
+CREATE TABLE Program_Employee
+(
+Program_ID		VARCHAR(35) NOT NULL,
+Employee_ID		VARCHAR(35) NOT NULL,
+CONSTRAINT 	pk_Program_Employee
+PRIMARY KEY(Program_ID, Employee_ID)
+)	
+
+
+ALTER SQL
+ALTER TABLE Child
+    ADD CONSTRAINT fk_Guardian
+    FOREIGN KEY (Guardian_ID)
+    REFERENCES Guardian (Guardian_ID) ;
+ 
+ALTER TABLE Child
+    ADD CONSTRAINT fk_Programs
+    FOREIGN KEY (Program_ID)
+    REFERENCES Programs (Program_ID);
+ 
+ALTER TABLE Program_Supplies 
+ADD CONSTRAINT fk_Program_Supplies
+FOREIGN KEY (Program_ID) 
+REFERENCES Programs (Program_ID);
+ 
+ALTER TABLE Program_Supplies 
+ADD CONSTRAINT fk_Program_Supplies2
+FOREIGN KEY (Product_ID) 
+REFERENCES Supplies (Product_ID);
+ 
+ALTER TABLE Supplies_Vendors 
+ADD CONSTRAINT fk_Supplies_Vendors
+FOREIGN KEY (Product_ID) 
+REFERENCES Supplies (Product_ID);
+ 
+ALTER TABLE Supplies_Vendors 
+ADD CONSTRAINT fk_Supplies_Vendors2
+FOREIGN KEY (Vendor_ID) 
+REFERENCES Vendors (Vendor_ID);
+ 
+ 
+ALTER TABLE Employee_Vendors 
+ADD CONSTRAINT fk_Employee_Vendors
+FOREIGN KEY (Employee_ID)
+REFERENCES Employee (Employee_ID);
+ 
+ALTER TABLE Employee_Vendors 
+ADD CONSTRAINT fk_Employee_Vendors2
+FOREIGN KEY (Vendor_ID)
+REFERENCES Vendors (Vendor_ID);
+ 
+ALTER TABLE Program_Employee
+ADD CONSTRAINT fk_Program_Employee
+FOREIGN KEY (Program_ID) 
+REFERENCES Programs (Program_ID);
+ 
+ALTER TABLE Program_Employee
+ADD CONSTRAINT fk_Program_Employee2
+FOREIGN KEY (Employee_ID) 
+REFERENCES Employee (Employee_ID);
+ 
+ 
+ 
+
+INSERT Statements
+INSERT INTO Programs (Program_ID, Program_Name, Program_Description, Age_Group, Program_Size,  Days_Per_Week, Hours_Per_Day, Total_Days, Meal_Plan, Start_Date, End_Date)
+VALUES ( 'P101', 'Program A', 'Class will run from 10:30-3:30, where the children will play, do arts and crafts, and other fun activities. Nap time will be from 12:00-1:00. Children of this program will be ages 2 years old.', 2, 15, 4, 5, 172, 'Plan A and Plan B', '09/01/2020', '06/23/2021' )
+
+INSERT INTO Programs (Program_ID, Program_Name, Program_Description, Age_Group, Program_Size,  Days_Per_Week, Hours_Per_Day, Total_Days, Meal_Plan, Start_Date, End_Date)
+VALUES ( 'P102', 'Program B', 'Class will run from 10:30-3:30, where the children will play, do arts and crafts, and other fun activities. Nap time will be from 1:00-2:00. Children of this program will be ages 3 years old.', 3, 15, 4, 5, 172, 'Plan A and Plan B’, '09/01/2020', '06/23/2021' );
+
+INSERT INTO Programs (Program_ID, Program_Name, Program_Description, Age_Group, Program_Size,  Days_Per_Week, Hours_Per_Day, Total_Days, Meal_Plan, Start_Date, End_Date)
+VALUES ( 'P103', 'Program C', 'Class will run from 10:30-3:30, where the children will play, do arts and crafts, learn numbers and ABCs, and other fun activities. Nap time will be from 2:00-3:00. Children of this program will be ages 4 years old.', 4, 15, 4, 5, 172, 'Plan A and Plan B', '09/01/2020', '06/23/2021' );
+
+INSERT INTO Programs (Program_ID, Program_Name, Program_Description, Age_Group, Program_Size,  Days_Per_Week, Hours_Per_Day, Total_Days, Meal_Plan, Start_Date, End_Date)
+VALUES ( 'P104', 'Program D', 'Class will run from 10:30-3:30, where the children will play, do arts and crafts, and other fun activities. Nap time will be from 1:00-2:00. Children of this program will be ages 5 years old.', 5, 15, 4, 5, 172, 'Plan A and Plan B', '09/01/2020', '06/23/2021');
+
+INSERT INTO Child (Child_ID, First_Name, Last_Name, DOB, Gender, SSN, Age, Emergency_Contact, Food_Allergies, Meal_Preference, Napping_Hours, Start_Date, End_Date, Guardian_ID, Program_ID)
+VALUES ( 'C101', 'John', 'Stephenson', '03/22/2017', 'Male', '103-58-7984', 3, '9173471357', 'Peanuts', 'Plan A', 'From 1:00 - 2:00', '09/01/2020', '06/23/2021', 'G101', 'P102' );
+
+INSERT INTO Child (Child_ID, First_Name, Last_Name, DOB, Gender, SSN, Age, Emergency_Contact, Food_Allergies, Meal_Preference, Napping_Hours, Start_Date, End_Date, Guardian_ID, Program_ID)
+VALUES ( 'C102', 'Marc', 'Harris', '02/13/2018', 'Male', '713-47-0103', 2, '9176232291', 'Milk', 'Plan B', 'From 1:00 - 2:00', '09/01/2020', '06/23/2021', 'G102', 'P101' );
+
+INSERT INTO Child (Child_ID, First_Name, Last_Name, DOB, Gender, SSN, Age, Emergency_Contact, Food_Allergies, Meal_Preference, Napping_Hours, Start_Date, End_Date, Guardian_ID, Program_ID)
+VALUES ( 'C103', 'Lauren', 'Martin', '09/06/2017', 'Female', '020-11-4840', 3, '6161186023', 'Pollen and Cats', 'Plan B', 'From 1:00 - 2:00', '09/01/2020', '06/23/2021', 'G103', 'P102' ) ;
+
+INSERT INTO Child (Child_ID, First_Name, Last_Name, DOB, Gender, SSN, Age, Emergency_Contact, Food_Allergies, Meal_Preference, Napping_Hours, Start_Date, End_Date, Guardian_ID, Program_ID)
+VALUES ( 'C104', 'Rachel', 'Jones', '11/01/2016', 'Female', '013-32-4484', 4, '3472185812', 'None', 'Plan A', 'From 2:00 - 3:00', '09/01/2020', '06/23/2021', 'G104', 'P103' ) ;
+
+INSERT INTO Child (Child_ID, First_Name, Last_Name, DOB, Gender, SSN, Age, Emergency_Contact, Food_Allergies, Meal_Preference, Napping_Hours, Start_Date, End_Date, Guardian_ID, Program_ID)
+VALUES ( 'C105', 'Jason', 'Leonard', '04/10/2015', 'Female', '034-27-0911', 5, '2128124952', 'Strawberries and Almonds', 'Plan B', 'From 12:00 - 1:00', '09/01/2020', '06/23/2021', 'G105', 'P104' );
+
+
+
+INSERT INTO Guardian(Guardian_ID,  First_Name , Last_Name, Street_Address, City, State, Zip_Code,  Gender, SSN, Cell_Number, Home_Number, Enroll_Date)
+VALUES ('G101', 'Bob', 'Stephenson', '123 Willow Lane', 'New Hyde Park', 'NY', '11032', 'Male', '122-45-2215', '5162352912', '5162223968', '08/12/2020');
+
+INSERT INTO Guardian(Guardian_ID,  First_Name , Last_Name, Street_Address, City, State, Zip_Code,  Gender, SSN, Cell_Number, Home_Number, Enroll_Date)
+VALUES ('G102', 'James', 'Harris', '34 Manchester Road', 'Hoboken', 'NJ', '11508', 'Male', '063-12-5521', '7182341149', '7182486691', '07/29/2020');
+
+INSERT INTO Guardian(Guardian_ID,  First_Name , Last_Name, Street_Address, City, State, Zip_Code,  Gender, SSN, Cell_Number, Home_Number, Enroll_Date)
+VALUES ('G103', 'Grace', 'Martin', '24 Lexington Avenue', 'New York', 'NY', '11056', 'Female', '203-12-7853', '2051635933', '2054751922', '08/17/2020');
+
+INSERT INTO Guardian(Guardian_ID,  First_Name , Last_Name, Street_Address, City, State, Zip_Code,  Gender, SSN, Cell_Number, Home_Number, Enroll_Date)
+VALUES ('G104', 'Raymond', 'Jones', '2782 Randall Avenue', 'New Hyde Park', 'NY', '11032', 'Male', '458-21-5677', '5168631294', '5164529285', '06/11/2020');
+
+INSERT INTO Guardian(Guardian_ID,  First_Name , Last_Name, Street_Address, City, State, Zip_Code,  Gender, SSN, Cell_Number, Home_Number, Enroll_Date)
+VALUES ('G105', 'Stephanie', 'Leonard', '146 Royal Way', 'Williston Park', 'NY', '11059', 'Female', '139-49-2211', '5164599921', '5161385592', '07/18/2020');
+
+
+
+
+INSERT INTO Vendors (Vendor_ID, Vendor_Name, Vendor_Description, Phone_Number, Street_Address, City, State, Zip_Code)
+VALUES ('V101', 'Herman Miller', 'Sells a variety of office equipment for school and work environments', '2456132256', '125 Smith Lane', 'New York', 'NY', '11023');
+
+INSERT INTO Vendors (Vendor_ID, Vendor_Name, Vendor_Description, Phone_Number, Street_Address, City, State, Zip_Code)
+VALUES ('V102', 'Crayola', 'Sells all different types of crayons, color pencils and markers', '2112395849', '39 Hobbit Avenue', 'Whippany', 'NJ', '21059');
+
+INSERT INTO Vendors (Vendor_ID, Vendor_Name, Vendor_Description, Phone_Number, Street_Address, City, State, Zip_Code)
+VALUES ('V103', 'Scholastic', 'Home to all of your reading and writing needs for young children', '7182863419', '21 Woodbridge Lane', 'Hoboken', 'NJ', '11356');
+
+INSERT INTO Vendors (Vendor_ID, Vendor_Name, Vendor_Description, Phone_Number, Street_Address, City, State, Zip_Code)
+VALUES ('V104', 'Staples', 'Sells all office and school needs, for both students and professionals', '5162921192', '26 Johnson Boulevard', 'Garden City', 'NY', '11040');
+
+INSERT INTO Vendors (Vendor_ID, Vendor_Name, Vendor_Description, Phone_Number, Street_Address, City, State, Zip_Code)
+VALUES ('V105', 'Toys R Us', 'Sells a variety of toys and educational equipment for young children', '7459992128', '148 Devonshire Road', 'New York', 'NY', '12192');
+
+INSERT INTO Supplies (Product_ID, Product_Name, Date_Purchased, Supplier_Name, Quantity, Cost) 	
+VALUES ( 'S101', 'Office Chair', '12/22/2015', 'Herman Miller', 7, 3000 );
+
+INSERT INTO Supplies (Product_ID, Product_Name, Date_Purchased, Supplier_Name, Quantity, Cost) 	
+VALUES ( 'S102', 'Crayons', '08/11/2016', 'Crayola', 100, 250);
+
+INSERT INTO Supplies (Product_ID, Product_Name, Date_Purchased, Supplier_Name, Quantity, Cost) 	
+VALUES ( 'S103', 'Books', '08/11/2016', 'Scholastic', 100, 500);
+
+INSERT INTO Supplies (Product_ID, Product_Name, Date_Purchased, Supplier_Name, Quantity, Cost) 	
+VALUES ( 'S104', 'Copy Paper Ream', '08/12/2016', 'Staples', 50, 170);
+
+INSERT INTO Supplies (Product_ID, Product_Name, Date_Purchased, Supplier_Name, Quantity, Cost) 	
+VALUES ( 'S105', 'Toys', '08/12/2016', 'Toys R Us', 50, 250);
+
+INSERT INTO Employee (Employee_ID, First_Name, Last_Name, Street_Address, City, State, Zip_Code, Gender, Pay_Rate, SSN, Start_Date, Job)
+VALUES ('E001', 'Sara', 'Davis', '55 Coral Lane', 'Bayonne', 'NJ', '07002', 'Female', 25, '765-323-2211', '12/06/2005', 'Receptionist');
+
+INSERT INTO Employee (Employee_ID, First_Name, Last_Name, Street_Address, City, State, Zip_Code, Gender, Pay_Rate, SSN, Start_Date, Job)
+VALUES ('E002', 'Beth', 'Harmon', '221 Ford Avenue', 'Newark', 'NJ', '07114', 'Female', 42, '663-122-0941', '09/15/2009', 'Instructor');
+
+INSERT INTO Employee (Employee_ID, First_Name, Last_Name, Street_Address, City, State, Zip_Code, Gender, Pay_Rate, SSN, Start_Date, Job)
+VALUES ('E003', 'Jordan', 'Martinez', '45 Heidi Drive', 'Woodbridge', 'NJ', '08863', 'Male', 30, '123-432-7877', '04/22/1999', 'Instructor');
+
+
+
+
+INSERT INTO Employee (Employee_ID, First_Name, Last_Name, Street_Address, City, State, Zip_Code, Gender, Pay_Rate, SSN, Start_Date, Job)
+VALUES ('E004', 'Katrina', 'Kim', '377 Greenwich St', 'New York', 'NY', '10013', 'Female', 57, '033-215-5430', '01/24/2002', 'Nurse');
+
+INSERT INTO Employee (Employee_ID, First_Name, Last_Name, Street_Address, City, State, Zip_Code, Gender, Pay_Rate, SSN, Start_Date, Job)
+VALUES ('E005', 'Matthew', 'Mitchell', '34 Brown Blvd', 'Jersey City', 'NJ', '07304', 'Male', 36, '434-129-6544', '02/12/2000', 'Janitor');
+
+INSERT INTO Program_Supplies (Program_ID, Product_ID)
+VALUES( 'P101', 'S101');
+
+INSERT INTO Program_Supplies (Program_ID, Product_ID)
+VALUES('P103', 'S102');
+
+INSERT INTO Program_Supplies (Program_ID, Product_ID)
+VALUES('P102', 'S104');
+
+INSERT INTO Program_Supplies (Program_ID, Product_ID)
+VALUES('P101', 'S103');
+
+INSERT INTO Program_Supplies (Program_ID, Product_ID)
+VALUES('P104', 'S105');
+
+INSERT INTO Employee_Vendors (Employee_ID, Vendor_ID)
+VALUES ('E001', 'V101');
+
+INSERT INTO Employee_Vendors (Employee_ID, Vendor_ID)
+VALUES ('E002', 'V102');
+
+INSERT INTO Employee_Vendors (Employee_ID, Vendor_ID)
+VALUES ('E003', 'V103');
+
+
+INSERT INTO Employee_Vendors (Employee_ID, Vendor_ID)
+VALUES ('E004', 'V104');
+
+INSERT INTO Employee_Vendors (Employee_ID, Vendor_ID)
+VALUES ('E005', 'V105');
+
+INSERT INTO Supplies_Vendors(Product_ID, Vendor_ID)
+VALUES ('S101', 'V101');
+
+INSERT INTO Supplies_Vendors(Product_ID, Vendor_ID)
+VALUES ('S102', 'V102');
+
+INSERT INTO Supplies_Vendors(Product_ID, Vendor_ID)
+VALUES ('S103', 'V103');
+
+INSERT INTO Supplies_Vendors(Product_ID, Vendor_ID)
+VALUES ('S104', 'V104');
+
+INSERT INTO Supplies_Vendors(Product_ID, Vendor_ID)
+VALUES ('S105', 'V105');
+
+INSERT INTO Program_Employee(Program_ID, Employee_ID)	
+VALUES ('P101', 'E001');
+
+INSERT INTO Program_Employee(Program_ID, Employee_ID)	
+VALUES ('P102', 'E002');
+
+INSERT INTO Program_Employee(Program_ID, Employee_ID)	
+VALUES ('P103', 'E003');
+
+INSERT INTO Program_Employee(Program_ID, Employee_ID)	
+VALUES ('P104', 'E004');
+
+INSERT INTO Program_Employee(Program_ID, Employee_ID)	
+VALUES ('P105', 'E005');
